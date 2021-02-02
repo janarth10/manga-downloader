@@ -1,6 +1,7 @@
 ## Importing Necessary Modules
 import requests # to get image from the web
 import shutil # to save it locally
+from PIL import Image
 
 ## Set up the image URL and filename
 image_num = 0
@@ -9,6 +10,7 @@ image_num = 0
 # image_url = "https://cdn.pixabay.com/photo/2020/02/06/09/39/summer-4823612_960_720.jpg"
 
 another_image = True
+img_list = []
 while(another_image):
     # update image url number for next image
     image_num += 1
@@ -28,6 +30,8 @@ while(another_image):
         with open(filename,'wb') as f:
             shutil.copyfileobj(r.raw, f)
 
+        img_list.append(Image.open(filename))
+
         print('Image sucessfully Downloaded: ',filename)
     else:
         print('Image Couldn\'t be retreived')
@@ -37,4 +41,9 @@ while(another_image):
         #   404 - page doesn't exist = last image
         #   anything else is unexpected failure = investigate
         another_image = False
+
+# pdf.output("test.pdf", "F")
+final_pdf_name = 'tester.pdf'
+im1 = img_list[0]
+im1.save(final_pdf_name, "PDF" ,resolution=100.0, save_all=True, append_images=img_list[1:])
 
