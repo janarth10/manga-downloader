@@ -8,3 +8,8 @@
 2. combine images into a pdf named onepiece-chapter-{}.pdf
 3. figure out the url on its own
 4. cron job to do this weekly
+
+
+## TODOs
+- always clean up image files on every execution (failure/success)
+- do I need the chapter_num to defined in logs.json for first iteration?
