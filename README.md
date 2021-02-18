@@ -13,10 +13,12 @@ to find this for every manga I'm trying to download)
 ## steps
 1. given a url for first image, download all images for chapter
 2. combine images into a pdf named onepiece-chapter-{}.pdf
-3. figure out the url on its own
+3. figure out the image url on its own
 4. cron job to do this weekly
+5. using json file to store mangas to downloads, and the most recent chapter
 
 
 ## TODOs
 - always clean up image files on every execution (failure/success)
-- do I need the chapter_num to defined in logs.json for first iteration?
+- sometimes image will download for the next chapter saying  ("manga isn't out yet"). in which case do a check to see num images of chapter is > 5 (arbitrary number)
+- add more mangas to json

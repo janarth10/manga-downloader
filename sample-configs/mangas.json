@@ -1,0 +1,16 @@
+{
+    "mangas": [
+        {
+            "name": "one_piece",
+            "url_template": "https://ww8.readonepiece.com/chapter/one-piece-chapter-<CH_NUM>/",
+            "ch_num": 1005,
+            "html_selector": "img.js-page"
+        },
+        {
+            "name": "boruto",
+            "url_template": "https://read-boruto.online/manga/boruto-naruto-next-generations-chapter-<CH_NUM>/",
+            "ch_num": 55,
+            "html_selector": "img.wp-manga-chapter-img"
+        }
+    ]
+}

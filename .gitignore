@@ -1,3 +1,8 @@
 env/
 *.pdf
 logs.json
+.DS_Store
+.vscode
+__pycache__
+cron-logs
+configs
