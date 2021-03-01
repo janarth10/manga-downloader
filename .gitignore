@@ -1,8 +1,12 @@
 env/
-*.pdf
 logs.json
 .DS_Store
 .vscode
+
+
+
+*.pdf
 __pycache__
 cron-logs
 configs
+*.log
