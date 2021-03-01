@@ -3,7 +3,7 @@ import json
 from twilio.rest import Client
 
 CONFIG = None
-with open('configs/twilio.json', 'r') as f:
+with open('/Users/newdev/Hive/Development/personal_projects/manga-downloader/configs/twilio.json', 'r') as f:
     CONFIG = json.load(f)
 
 def get_twilio_client():

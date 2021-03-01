@@ -22,7 +22,6 @@ with open(MANGAS_CONFIG) as f:
 # download, upload to google drive, send sms with links to drive
 for i, manga_data in enumerate(mangas):
     try:
-        import wdb; wdb.set_trace()
         manga_obj = Manga(**manga_data)
         pdf_path = manga_obj.download_chapter_into_pdf()
         mangas[i]['ch_num'] += 1
@@ -36,7 +35,9 @@ for i, manga_data in enumerate(mangas):
 
         # send sms with gdrive links
         sms_body = f"New download: {file_data['name']}\nView Online: {file_data['webViewLink']}\n Download Manga: {file_data['webContentLink']}"
-        send_sms(message_body=sms_body, recipient_phone_num='6475233013')
+
+        for phone_number in manga_data['phone_numbers']:
+            send_sms(message_body=sms_body, recipient_phone_num=phone_number)
 
     except:
         # blindly catching exceptions, don't wanna miss other mangas if one fails
