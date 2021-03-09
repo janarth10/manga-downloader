@@ -1,7 +1,7 @@
 import datetime
 import json
 import os
-import shutil 
+import shutil
 
 import bs4
 import requests
@@ -12,15 +12,15 @@ REPLACE_CH_NUM = '<CH_NUM>'
 
 class Manga:
 
-    def __init__(self, name, ch_num, url_template, html_selector):
+    def __init__(self, name, ch_num, url_template, html_selector, **kwargs):
         self.name = name
         self.ch_num = ch_num
         self.url_template = url_template
         self.html_selector = html_selector
-    
+
     def get_chapter_url(self, ch_num=None):
         chapter = ch_num or self.ch_num
-        if chapter is None: raise("Chapter number is None!")
+        if chapter is None: raise Exception("Chapter number is None!")
 
         return self.url_template.replace(REPLACE_CH_NUM, str(chapter))
 
@@ -33,11 +33,11 @@ class Manga:
             5. deletes image downloads
         """
         chapter = ch_num or self.ch_num
-        if chapter is None: raise("Chapter number is None!")
+        if chapter is None: raise Exception("Chapter number is None!")
 
         # Download webpage HTML
         res = requests.get(self.get_chapter_url(chapter))
-        res.raise_for_status()  # Error handling?
+        res.raise_for_status()
 
         # Parse HTML for images and their source attributes
         html_parser = bs4.BeautifulSoup(res.text, "html.parser")
@@ -45,10 +45,13 @@ class Manga:
             self.html_selector
         )  # will need to keep this updated w site format
         img_urls = [img_tag.attrs["src"] for img_tag in img_tags]
+        if len(img_urls) < 3:
+            raise Exception(f"Couldn't find 3 images for {self.name}_{chapter}. Manga didn't come out, or they changed format of their site! Investigate URL:\n\n{self.get_chapter_url(chapter)}")
+
 
         # Download images
-        img_list = []
-        img_filename_list = []
+        img_list = [] # PIL.Image objects. Will be combined into PDF
+        img_filename_list = [] # used to delete images which were saved locally after PDF is created
         for i, img_url in enumerate(img_urls):
             # strip any newline special characters that might mess up request
             img_url = img_url.strip()
@@ -71,8 +74,6 @@ class Manga:
                 img_list.append(Image.open(filename).convert('RGB'))
             else:
                 error_msg = f"Image {i} Couldn't be retreived\nfailed for unexpected status code = {r.status_code}\n"
-                if i == 0:
-                    error_msg += "Failed on first image. Assuming manga didn't come out, not incrementing manga number\n"
                 print(error_msg)
                 break
 
@@ -91,24 +92,11 @@ class Manga:
                 append_images=img_list[1:],
             )
             print(f"Successfully downloaded {final_pdf_name}")
+        else:
+            raise Exception(f"Failed to create PDF because we downloaded {len(img_list)} images, but expected {len(img_urls)}. Investigate: \n\n {self.get_chapter_url(chapter)}")
 
         # Clean up image downloads
         for img in img_filename_list:
             os.remove(img)
 
         return final_pdf_name
-
-
-"""
-main pseudo
-
-mangas = load config (array of dicts)
-
-for manga in mangas:
-    manga_obj = Manga(**manga)
-    manga_obj.download_chapter_into_pdf
-    mangas[i][ch_num] += 1
-
-mangas = dump config
-
-"""
