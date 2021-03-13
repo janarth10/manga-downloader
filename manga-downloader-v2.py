@@ -42,7 +42,6 @@ elif len(sys.argv) == 1:
         try:
             manga_obj = Manga(**manga_data)
             pdf_path = manga_obj.download_chapter_into_pdf()
-            mangas[i]['ch_num'] += 1
 
             # upload to gdrive
             file_data = upload_file_to_drive(
@@ -55,6 +54,10 @@ elif len(sys.argv) == 1:
             sms_body = f"New download: {file_data['name']}\nView Online: {file_data['webViewLink']}\n Download Manga: {file_data['webContentLink']}"
             for phone_number in manga_data['phone_numbers']:
                 send_sms(message_body=sms_body, recipient_phone_num=phone_number)
+
+            # Incrementing this value essentially indicates the operations as a success.
+            #   Because the script will only be trying to download the next manga in future executions.
+            mangas[i]['ch_num'] += 1
 
         except:
             # blindly catching exceptions, don't wanna miss other mangas if one fails
