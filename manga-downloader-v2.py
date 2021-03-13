@@ -1,6 +1,7 @@
 ## Importing Necessary Modules
 import datetime
 import json
+import sys
 import traceback
 
 from g_drive_helper import upload_file_to_drive
@@ -20,31 +21,50 @@ mangas = None
 with open(MANGAS_CONFIG) as f:
     mangas = json.load(f)['mangas']
 
-# download, upload to google drive, send sms with links to drive
-for i, manga_data in enumerate(mangas):
-    try:
-        from pprint import pprint
-        manga_obj = Manga(**manga_data)
-        pdf_path = manga_obj.download_chapter_into_pdf()
-        mangas[i]['ch_num'] += 1
 
-        # upload to gdrive
-        file_data = upload_file_to_drive(
-            drive_file_name=pdf_path.split('/')[-1],
-            file_path=pdf_path,
-            parents=[G_DRIVE_FOLDER_ID]
-        )
+# Downloading a specific manga through terminal
+if len(sys.argv) == 3:
+    print('arg list: ', str(sys.argv))
+    chapter_name = str(sys.argv[1])
+    ch_num = int(sys.argv[2])
 
-        # send sms with gdrive links
-        sms_body = f"New download: {file_data['name']}\nView Online: {file_data['webViewLink']}\n Download Manga: {file_data['webContentLink']}"
-        for phone_number in manga_data['phone_numbers']:
-            send_sms(message_body=sms_body, recipient_phone_num=phone_number)
+    manga_data = [manga for manga in mangas if manga.get('name') == chapter_name][0]
+    manga_data['ch_num'] = ch_num
+    manga_obj = Manga(**manga_data)
+    pdf_path = manga_obj.download_chapter_into_pdf()
 
-    except:
-        # blindly catching exceptions, don't wanna miss other mangas if one fails
-        traceback.print_exc()
-        pass
 
-# save config file with incremented chapter nums
-with open(MANGAS_CONFIG, 'w') as f:
-    json.dump({'mangas': mangas}, f)
+# Recurring cron to send out new mangas
+elif len(sys.argv) == 1:
+
+    # download, upload to google drive, send sms with links to drive
+    for i, manga_data in enumerate(mangas):
+        try:
+            manga_obj = Manga(**manga_data)
+            pdf_path = manga_obj.download_chapter_into_pdf()
+            mangas[i]['ch_num'] += 1
+
+            # upload to gdrive
+            file_data = upload_file_to_drive(
+                drive_file_name=pdf_path.split('/')[-1],
+                file_path=pdf_path,
+                parents=[G_DRIVE_FOLDER_ID]
+            )
+
+            # send sms with gdrive links
+            sms_body = f"New download: {file_data['name']}\nView Online: {file_data['webViewLink']}\n Download Manga: {file_data['webContentLink']}"
+            for phone_number in manga_data['phone_numbers']:
+                send_sms(message_body=sms_body, recipient_phone_num=phone_number)
+
+        except:
+            # blindly catching exceptions, don't wanna miss other mangas if one fails
+            print(f"Last ran { datetime.datetime.now().strftime('%c') }")
+            traceback.print_exc()
+            pass
+
+    # save config file with incremented chapter nums
+    with open(MANGAS_CONFIG, 'w') as f:
+        json.dump({'mangas': mangas}, f)
+
+else:
+    raise Exception('Unexpected amount of command line arguments!!')
