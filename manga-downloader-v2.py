@@ -59,10 +59,13 @@ elif len(sys.argv) == 1:
             #   Because the script will only be trying to download the next manga in future executions.
             mangas[i]["ch_num"] += 1
 
-        except:
+        except Exception as e:
             # blindly catching exceptions, don't wanna miss other mangas if one fails
-            print(f"Last ran { datetime.datetime.now().strftime('%c') }")
+            print("------------ start: exception --------------")
             traceback.print_exc()
+            print(f"Exception at { datetime.datetime.now().strftime('%c') }")
+            print(e)
+            print("------------ end: exception --------------")
             pass
 
     # save config file with incremented chapter nums

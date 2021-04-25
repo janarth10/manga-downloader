@@ -1,4 +1,3 @@
-import datetime
 import json
 import os
 import shutil
@@ -44,7 +43,17 @@ class Manga:
         img_tags = html_parser.select(
             self.html_selector
         )  # will need to keep this updated w site format
-        img_urls = [img_tag.attrs["src"] for img_tag in img_tags]
+
+        if self.name == "jujutsu_kaisen":
+            # hacky solution for jujutsu
+            img_urls = [
+                f"https:{img_tag.attrs['data-src'].strip()}"
+                for img_tag in img_tags
+            ]
+        else:
+            img_urls = [img_tag.attrs["src"] for img_tag in img_tags]
+
+
         if len(img_urls) < 3:
             raise Exception(f"Couldn't find 3 images for {self.name}_{chapter}. Manga didn't come out, or they changed format of their site! Investigate URL:\n\n{self.get_chapter_url(chapter)}")
 

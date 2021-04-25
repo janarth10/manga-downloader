@@ -22,3 +22,8 @@ to find this for every manga I'm trying to download)
 - always clean up image files on every execution (failure/success)
 - sometimes image will download for the next chapter saying  ("manga isn't out yet"). in which case do a check to see num images of chapter is > 5 (arbitrary number)
 - add more mangas to json
+
+
+## cron
+launchctl unload /Users/newdev/Library/LaunchAgents/manga-downloader.plist
+launchctl load /Users/newdev/Library/LaunchAgents/manga-downloader.plist

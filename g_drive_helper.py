@@ -7,8 +7,8 @@ from google.auth.transport.requests import Request
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
-TOKEN_PATH = 'configs/token.pickle'
-CREDS_PATH = 'configs/google_api_credentials.json'
+TOKEN_PATH = '/Users/newdev/Hive/Development/personal_projects/manga-downloader/configs/token.pickle'
+CREDS_PATH = '/Users/newdev/Hive/Development/personal_projects/manga-downloader/configs/google_api_credentials.json'
 
 def get_google_drive_service():
     """Shows basic usage of the Drive v3 API.
