@@ -44,15 +44,10 @@ class Manga:
             self.html_selector
         )  # will need to keep this updated w site format
 
-        if self.name == "jujutsu_kaisen":
-            # hacky solution for jujutsu
-            img_urls = [
-                f"https:{img_tag.attrs['data-src'].strip()}"
-                for img_tag in img_tags
-            ]
-        else:
-            img_urls = [img_tag.attrs["src"] for img_tag in img_tags]
-
+        img_urls = [
+            img_tag.attrs.get("src") or img_tag.attrs.get("data-src")
+            for img_tag in img_tags
+        ]
 
         if len(img_urls) < 3:
             raise Exception(f"Couldn't find 3 images for {self.name}_{chapter}. Manga didn't come out, or they changed format of their site! Investigate URL:\n\n{self.get_chapter_url(chapter)}")
@@ -64,6 +59,8 @@ class Manga:
         for i, img_url in enumerate(img_urls):
             # strip any newline special characters that might mess up request
             img_url = img_url.strip()
+            if 'https://' or 'http://' not in img_url:
+                img_url = f"https://{img_url}"
 
             # Open the url image, set stream to True, this will return the stream content.
             r = requests.get(img_url, stream=True)
