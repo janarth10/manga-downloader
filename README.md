@@ -25,5 +25,7 @@ to find this for every manga I'm trying to download)
 
 
 ## cron
-launchctl unload /Users/newdev/Library/LaunchAgents/manga-downloader.plist
-launchctl load /Users/newdev/Library/LaunchAgents/manga-downloader.plist
+cp manga-downloader-cron.plist to /Users/newdev/Library/LaunchAgents/
+
+launchctl unload /Users/newdev/Library/LaunchAgents/manga-downloader-cron.plist
+launchctl load /Users/newdev/Library/LaunchAgents/manga-downloader-cron.plist

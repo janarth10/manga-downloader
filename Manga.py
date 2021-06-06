@@ -59,7 +59,8 @@ class Manga:
         for i, img_url in enumerate(img_urls):
             # strip any newline special characters that might mess up request
             img_url = img_url.strip()
-            if 'https://' or 'http://' not in img_url:
+
+            if 'https://' not in img_url and 'http://' not in img_url:
                 img_url = f"https://{img_url}"
 
             # Open the url image, set stream to True, this will return the stream content.
