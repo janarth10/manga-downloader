@@ -3,6 +3,7 @@ import datetime
 import json
 import sys
 import traceback
+import logging
 
 from g_drive_helper import upload_file_to_drive
 from Manga import Manga
@@ -22,26 +23,20 @@ with open(MANGAS_CONFIG) as f:
     mangas = json.load(f)["mangas"]
 
 
-### --------- special_script_woooo ---------------
-
-def special_script_woooo():
-    print('special_script_woooo')
-    for ch_num in range(327, 400):
-        chapter_name = 'my_hero'
-
-        manga_data = [manga for manga in mangas if manga.get("name") == chapter_name][0]
-        manga_data["ch_num"] = ch_num
-        manga_obj = Manga(**manga_data)
-        pdf_path = manga_obj.download_chapter_into_pdf()
-
-### --------- special_script_woooo ---------------
-
-# special one time script
-if len(sys.argv) == 2:
-    special_script_woooo()
+logging.basicConfig(
+    filename='cookbook-logger.log',
+    level=logging.WARNING,
+    format='%(levelname)s:%(asctime)s:%(message)s'
+)
 
 # Downloading a specific manga through terminal
-elif len(sys.argv) == 3:
+if len(sys.argv) == 3:
+
+    logging.warning('warning message')
+    logging.info('info message')
+    logging.error('error message')
+    exit()
+
     print("arg list: ", str(sys.argv))
     chapter_name = str(sys.argv[1])
     ch_num = int(sys.argv[2])
@@ -51,8 +46,14 @@ elif len(sys.argv) == 3:
     manga_obj = Manga(**manga_data)
     pdf_path = manga_obj.download_chapter_into_pdf()
 
+
 # Recurring cron to send out new mangas
 elif len(sys.argv) == 1:
+
+    logging.warning('warning message - in elif statement')
+    logging.info('info message - in elif statement')
+    logging.error('error message - in elif statement')
+    exit()
 
     # download, upload to google drive, send sms with links to drive
     for i, manga_data in enumerate(mangas):
@@ -91,6 +92,3 @@ elif len(sys.argv) == 1:
 
 else:
     raise Exception("Unexpected amount of command line arguments!!")
-
-
-

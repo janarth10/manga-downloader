@@ -44,10 +44,17 @@ class Manga:
             self.html_selector
         )  # will need to keep this updated w site format
 
+
+        img_src_attr_key = 'src'
+        if self.name == 'my_hero':
+            img_src_attr_key = 'data-src'
         img_urls = [
-            img_tag.attrs.get("src") or img_tag.attrs.get("data-src")
+            img_tag.attrs[img_src_attr_key]
             for img_tag in img_tags
+            if img_tag.attrs.get(img_src_attr_key)
         ]
+
+        # import pdb; pdb.set_trace()
 
         if len(img_urls) < 3:
             raise Exception(f"Couldn't find 3 images for {self.name}_{chapter}. Manga didn't come out, or they changed format of their site! Investigate URL:\n\n{self.get_chapter_url(chapter)}")
@@ -57,7 +64,11 @@ class Manga:
         img_list = [] # PIL.Image objects. Will be combined into PDF
         img_filename_list = [] # used to delete images which were saved locally after PDF is created
         for i, img_url in enumerate(img_urls):
+            if not img_url:
+                continue
+
             # strip any newline special characters that might mess up request
+            # import pdb; pdb.set_trace()
             img_url = img_url.strip()
 
             if 'https://' not in img_url and 'http://' not in img_url:
@@ -100,10 +111,15 @@ class Manga:
             )
             print(f"Successfully downloaded {final_pdf_name}")
         else:
+            # Clean up image downloads
+            for img in img_filename_list:
+                os.remove(img)
             raise Exception(f"Failed to create PDF because we downloaded {len(img_list)} images, but expected {len(img_urls)}. Investigate: \n\n {self.get_chapter_url(chapter)}")
+
 
         # Clean up image downloads
         for img in img_filename_list:
             os.remove(img)
+
 
         return final_pdf_name
