@@ -1,41 +1,48 @@
-from __future__ import print_function
-import pickle
 import os.path
-from googleapiclient.discovery import build, MediaFileUpload
-from google_auth_oauthlib.flow import InstalledAppFlow
+
 from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build, MediaFileUpload
+from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
-TOKEN_PATH = '/Users/newdev/Hive/Development/personal_projects/manga-downloader/configs/token.pickle'
-CREDS_PATH = '/Users/newdev/Hive/Development/personal_projects/manga-downloader/configs/google_api_credentials.json'
 
-# empty commit
+# https://developers.google.com/drive/api/quickstart/python
+CREDENTIALS_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/credentials.json'
+TOKEN_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/token.json'
+
 def get_google_drive_service():
-    """Shows basic usage of the Drive v3 API.
-    Prints the names and ids of the first 10 files the user has access to.
-    """
     creds = None
-    # The file token.pickle stores the user's access and refresh tokens, and is
+    # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
     if os.path.exists(TOKEN_PATH):
-        with open(TOKEN_PATH, 'rb') as token:
-            creds = pickle.load(token)
+        creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                CREDS_PATH, SCOPES)
-            creds = flow.run_local_server(port=0)
+                CREDENTIALS_PATH, SCOPES
+            )
+            creds = flow.run_local_server(    
+                host='localhost',
+                port=56655
+            )
         # Save the credentials for the next run
-        with open(TOKEN_PATH, 'wb') as token:
-            pickle.dump(creds, token)
+        with open(TOKEN_PATH, "w") as token:
+            token.write(creds.to_json())
 
-    service = build('drive', 'v3', credentials=creds)
-    return service
+    try:
+        service = build("drive", "v3", credentials=creds)
+        return service
+    except HttpError as error:
+        # TODO(developer) - Handle errors from drive API.
+        print(f"An error occurred: {error}")
+        return None
 
 def upload_file_to_drive(drive_file_name, file_path, parents=[]):
     service = get_google_drive_service()
