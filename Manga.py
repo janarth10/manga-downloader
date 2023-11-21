@@ -6,7 +6,7 @@ import bs4
 import requests
 from PIL import Image
 
-ABS_REPO_PATH = '/Users/newdev/Hive/Development/personal_projects/manga-downloader' # can get this programatically instead
+ABS_REPO_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader' # can get this programatically instead
 REPLACE_CH_NUM = '<CH_NUM>'
 
 class Manga:
