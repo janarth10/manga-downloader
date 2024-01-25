@@ -1,7 +1,11 @@
-from g_drive_helper import (
+import os
+
+from google_drive import (
   get_google_drive_service,
   upload_file_to_drive
 )
+
+ABS_REPO_PATH = os.getcwd()
 
 # class TestGDriveHelper(TestCase):
 #   @mock.patch('g_drive_helper.build')
@@ -40,7 +44,7 @@ def test_upload_file_to_drive():
 
     file_data = upload_file_to_drive(
         drive_file_name="TEST_one_piece_1098.pdf",
-        file_path="/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/one_piece_1098.pdf",
+        file_path=f"{ABS_REPO_PATH}/downloaded_mangas/one_piece_1098.pdf",
         parents=[ONE_PIECE_FOLDER_ID]
     )
     assert(file_data["name"] == "TEST_one_piece_1098.pdf")

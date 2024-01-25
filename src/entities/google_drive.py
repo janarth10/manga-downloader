@@ -11,9 +11,9 @@ SCOPES = ['https://www.googleapis.com/auth/drive.file']
 # SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
 
 # https://developers.google.com/drive/api/quickstart/python
-# CREDENTIALS_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/credentials.json'
-CREDENTIALS_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/manga-oauth-2024-01.json'
-TOKEN_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/token.json'
+ABS_REPO_PATH = os.getcwd()
+CREDENTIALS_PATH = f"{ABS_REPO_PATH}/configs/manga-oauth-2024-01.json"
+TOKEN_PATH = f"{ABS_REPO_PATH}/configs/token.json"
 
 def get_google_drive_service():
     creds = None

@@ -5,7 +5,8 @@ import bs4
 import requests
 from PIL import Image
 
-ABS_REPO_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader' # can get this programatically instead
+ABS_REPO_PATH = os.getcwd()
+DOWNLOADED_MANGAS_FOLDER = 'downloaded_mangas'
 REPLACE_CH_NUM = '<CH_NUM>'
 
 class Manga:
@@ -80,7 +81,7 @@ class Manga:
                 r.raw.decode_content = True
 
                 # Open a local file with wb ( write binary ) permission.
-                filename = f"{ABS_REPO_PATH}/{self.name}_{chapter}_img_{i}"
+                filename = f"{ABS_REPO_PATH}/{DOWNLOADED_MANGAS_FOLDER}/{self.name}_{chapter}_img_{i}"
                 img_filename_list.append(filename)
                 with open(filename, "wb") as f:
                     shutil.copyfileobj(r.raw, f)
@@ -97,7 +98,7 @@ class Manga:
         if len(img_urls) == len(
             img_list
         ):  # create pdf if we downloaded as many images as we expected
-            final_pdf_name = f"{ABS_REPO_PATH}/{self.name}_{chapter}.pdf"
+            final_pdf_name = f"{ABS_REPO_PATH}/{DOWNLOADED_MANGAS_FOLDER}/{self.name}_{chapter}.pdf"
             im1 = img_list[0]
             im1.save(
                 final_pdf_name,

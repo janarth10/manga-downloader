@@ -6,8 +6,8 @@
 	<string>manga</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/opt/homebrew/bin/python3</string>
-		<string>/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/main.py</string>
+		<string>source</string>
+		<string>/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/cronjob.sh</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

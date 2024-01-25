@@ -1,9 +1,12 @@
+import os
 import json
 
 from twilio.rest import Client
 
+ABS_REPO_PATH = os.getcwd()
+
 CONFIG = None
-with open('/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/twilio.json', 'r') as f:
+with open(f"{ABS_REPO_PATH}configs/twilio.json", 'r') as f:
     CONFIG = json.load(f)
 
 def get_twilio_client():
