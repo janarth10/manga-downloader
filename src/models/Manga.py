@@ -1,4 +1,3 @@
-import json
 import os
 import shutil
 
@@ -53,8 +52,6 @@ class Manga:
             for img_tag in img_tags
             if img_tag.attrs.get(img_src_attr_key)
         ]
-
-        # import pdb; pdb.set_trace()
 
         if len(img_urls) < 3:
             raise Exception(f"Couldn't find 3 images for {self.name}_{chapter}. Manga didn't come out, or they changed format of their site! Investigate URL:\n\n{self.get_chapter_url(chapter)}")

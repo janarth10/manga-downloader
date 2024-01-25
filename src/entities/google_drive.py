@@ -8,9 +8,11 @@ from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
+# SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
 
 # https://developers.google.com/drive/api/quickstart/python
-CREDENTIALS_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/credentials.json'
+# CREDENTIALS_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/credentials.json'
+CREDENTIALS_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/manga-oauth-2024-01.json'
 TOKEN_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/configs/token.json'
 
 def get_google_drive_service():
@@ -28,10 +30,11 @@ def get_google_drive_service():
             flow = InstalledAppFlow.from_client_secrets_file(
                 CREDENTIALS_PATH, SCOPES
             )
-            creds = flow.run_local_server(    
-                host='localhost',
-                port=56655
-            )
+            # creds = flow.run_local_server(    
+            #     host='localhost',
+            #     port=56655
+            # )
+            creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open(TOKEN_PATH, "w") as token:
             token.write(creds.to_json())
@@ -43,6 +46,7 @@ def get_google_drive_service():
         # TODO(developer) - Handle errors from drive API.
         print(f"An error occurred: {error}")
         return None
+    
 
 def upload_file_to_drive(drive_file_name, file_path, parents=[]):
     service = get_google_drive_service()
@@ -55,14 +59,6 @@ def upload_file_to_drive(drive_file_name, file_path, parents=[]):
     file_resource = service.files().create(
         body=file_metadata,
         media_body=media,
-        fields='id,name,webViewLink,webContentLink'
-    ).execute()
-    return file_resource
-
-# not being used anymore bc we can get these links on creation
-def get_drive_download_and_view_links(service, drive_file_id):
-    file_resource = service.files().get(
-        fileId=drive_file_id,
         fields='id,name,webViewLink,webContentLink'
     ).execute()
     return file_resource

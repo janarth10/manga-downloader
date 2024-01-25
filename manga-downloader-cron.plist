@@ -6,8 +6,8 @@
 	<string>manga</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Users/newdev/.pyenv/shims/python3</string>
-		<string>/Users/newdev/Hive/Development/personal_projects/manga-downloader/manga-downloader-v2.py</string>
+		<string>/opt/homebrew/bin/python3</string>
+		<string>/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/main.py</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
@@ -17,8 +17,8 @@
 	  <integer>23</integer>
 	</dict>
 	<key>StandardOutPath</key>
-	<string>/Users/newdev/Hive/Development/personal_projects/manga-downloader/cron-logs/manga-cron-out.log</string>
+	<string>/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/cron-logs/manga-cron-out.log</string>
 	<key>StandardErrorPath</key>
-	<string>/Users/newdev/Hive/Development/personal_projects/manga-downloader/cron-logs/manga-cron-error.log</string>
+	<string>/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/cron-logs/manga-cron-error.log</string>
 </dict>
 </plist>

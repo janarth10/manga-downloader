@@ -1,5 +1,24 @@
 # manga-downloader
 
+## UPDATES 2024
+Google Cloud Console Project https://console.cloud.google.com/home/dashboard?project=manga-1613607112822
+Google Drive API https://console.cloud.google.com/apis/api/drive.googleapis.com/metrics?project=manga-1613607112822
+
+## Setup
+
+1. pip3 install -r requirements.txt
+2. cp manga-downloader-cron.plist /Users/<macbook username>/Library/LaunchAgents/
+3. launchctl load /Users/<macbook username>/Library/LaunchAgents/manga-downloader-cron.plist
+4. The script will run on load. Check cron-logs/ to see if there were any errors.
+
+### Making changes to the cron
+Unload then load the plist file.
+
+launchctl unload /Users/<macbook username>/Library/LaunchAgents/manga-downloader-cron.plist
+launchctl load /Users/<macbook username>/Library/LaunchAgents/manga-downloader-cron.plist
+
+#################################################
+
 ## goal
 - every week automatically download the latest chapter of one piece then upload it to my kobo
 
@@ -25,7 +44,7 @@ to find this for every manga I'm trying to download)
 
 
 ## cron
-cp manga-downloader-cron.plist to /Users/newdev/Library/LaunchAgents/
+cp manga-downloader-cron.plist /Users/newdev/Library/LaunchAgents/
 
 launchctl unload /Users/newdev/Library/LaunchAgents/manga-downloader-cron.plist
 launchctl load /Users/newdev/Library/LaunchAgents/manga-downloader-cron.plist
