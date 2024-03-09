@@ -1,6 +1,6 @@
 import os
 
-from google_drive import (
+from entities.google_drive import (
   get_google_drive_service,
   upload_file_to_drive
 )

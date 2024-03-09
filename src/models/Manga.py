@@ -34,6 +34,11 @@ class Manga:
         chapter = ch_num or self.ch_num
         if chapter is None: raise Exception("Chapter number is None!")
 
+        # stop download if manga exists
+        if os.path.exists(f"{ABS_REPO_PATH}/{DOWNLOADED_MANGAS_FOLDER}/{self.name}_{chapter}.pdf"):
+            print(f"{self.name}_{chapter}.pdf already exists. Skipping download.")
+            return f"{ABS_REPO_PATH}/{DOWNLOADED_MANGAS_FOLDER}/{self.name}_{chapter}.pdf"
+
         # Download webpage HTML
         res = requests.get(self.get_chapter_url(chapter))
         res.raise_for_status()
@@ -43,7 +48,6 @@ class Manga:
         img_tags = html_parser.select(
             self.html_selector
         )  # will need to keep this updated w site format
-
 
         img_src_attr_key = 'src'
         if self.name == 'my_hero':

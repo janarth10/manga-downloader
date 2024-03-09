@@ -17,6 +17,15 @@ Unload then load the plist file.
 launchctl unload /Users/<macbook username>/Library/LaunchAgents/manga-downloader-cron.plist
 launchctl load /Users/<macbook username>/Library/LaunchAgents/manga-downloader-cron.plist
 
+## Troubleshooting
+Error:
+
+`google.auth.exceptions.RefreshError: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})`
+
+Fix:
+Delete the token.json file and re-run.
+
+
 #################################################
 
 ## goal

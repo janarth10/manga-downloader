@@ -4,7 +4,6 @@ import json
 import traceback
 
 from entities.google_drive import upload_file_to_drive
-from entities.sms import send_sms
 from models.Manga import Manga
 
 # TODO use sys to get the path to the repo
@@ -76,7 +75,8 @@ def _download_and_send_manga(manga_download_data):
         parents=[manga_download_data["g_drive_folder_id"]],
     )
 
+    # OUT OF FUNDS - Might just leave this out
     # send sms with gdrive links
-    sms_body = f"New download: {file_data['name']}\nView Online: {file_data['webViewLink']}\n Download Manga: {file_data['webContentLink']}"
-    for phone_number in manga_download_data["phone_numbers"]:
-        send_sms(message_body=sms_body, recipient_phone_num=phone_number)
+    # sms_body = f"New download: {file_data['name']}\nView Online: {file_data['webViewLink']}\n Download Manga: {file_data['webContentLink']}"
+    # for phone_number in manga_download_data["phone_numbers"]:
+    #     send_sms(message_body=sms_body, recipient_phone_num=phone_number)
