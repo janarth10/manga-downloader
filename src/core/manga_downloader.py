@@ -1,14 +1,13 @@
-import os
+
 import datetime
 import json
 import traceback
 
 from entities.google_drive import upload_file_to_drive
 from models.Manga import Manga
+from constants import ABS_REPO_PATH
 
-# TODO use sys to get the path to the repo
-ABS_REPO_PATH = os.getcwd()
-MANGAS_CONFIG = f"{ABS_REPO_PATH}/configs/mangas.json"
+MANGAS_CONFIG = f"{ABS_REPO_PATH}configs/mangas.json"
 
 # folder ids are in the URL
 # G_DRIVE_FOLDER_ID = "1jLJ69cn5FcEshFg-uk3kYdwq9-c_QAeZ"  # ID to mangas folder

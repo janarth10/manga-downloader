@@ -5,7 +5,7 @@ import bs4
 import requests
 from PIL import Image
 
-ABS_REPO_PATH = os.getcwd()
+from constants import ABS_REPO_PATH
 DOWNLOADED_MANGAS_FOLDER = 'downloaded_mangas'
 REPLACE_CH_NUM = '<CH_NUM>'
 

@@ -3,7 +3,7 @@
 
 # from twilio.rest import Client
 
-# ABS_REPO_PATH = os.getcwd()
+# from constants import ABS_REPO_PATH
 
 # CONFIG = None
 # with open(f"{ABS_REPO_PATH}/configs/twilio.json", 'r') as f:

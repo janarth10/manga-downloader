@@ -6,12 +6,13 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build, MediaFileUpload
 from googleapiclient.errors import HttpError
 
+from constants import ABS_REPO_PATH
+
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
 # SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
 
 # https://developers.google.com/drive/api/quickstart/python
-ABS_REPO_PATH = os.getcwd()
 CREDENTIALS_PATH = f"{ABS_REPO_PATH}/configs/manga-oauth-2024-01.json"
 TOKEN_PATH = f"{ABS_REPO_PATH}/configs/token.json"
 

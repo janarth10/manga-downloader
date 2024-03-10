@@ -11,6 +11,8 @@ Google Drive API https://console.cloud.google.com/apis/api/drive.googleapis.com/
 3. launchctl load /Users/<macbook username>/Library/LaunchAgents/manga-downloader-cron.plist
 4. The script will run on load. Check cron-logs/ to see if there were any errors.
 
+launchctl load /Users/janarth.punniyamoorthyopendoor.com/Library/LaunchAgents/manga-downloader-cron.plist
+
 ### Making changes to the cron
 Unload then load the plist file.
 

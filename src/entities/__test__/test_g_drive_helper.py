@@ -5,7 +5,7 @@ from entities.google_drive import (
   upload_file_to_drive
 )
 
-ABS_REPO_PATH = os.getcwd()
+from constants import ABS_REPO_PATH
 
 # class TestGDriveHelper(TestCase):
 #   @mock.patch('g_drive_helper.build')
