@@ -1,1 +1,1 @@
-ABS_REPO_PATH = '/Users/janarth.punniyamoorthyopendoor.com/personal-git/manga-downloader/'
+ABS_REPO_PATH = '/Users/janarthpunniyamoorthy/projects/side_projects/manga-downloader'

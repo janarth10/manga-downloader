@@ -3,11 +3,10 @@ import datetime
 import json
 import traceback
 
-from entities.google_drive import upload_file_to_drive
 from models.Manga import Manga
 from constants import ABS_REPO_PATH
 
-MANGAS_CONFIG = f"{ABS_REPO_PATH}configs/mangas.json"
+MANGAS_CONFIG = f"{ABS_REPO_PATH}/configs/mangas.json"
 
 # folder ids are in the URL
 # G_DRIVE_FOLDER_ID = "1jLJ69cn5FcEshFg-uk3kYdwq9-c_QAeZ"  # ID to mangas folder
@@ -68,11 +67,11 @@ def _download_and_send_manga(manga_download_data):
     pdf_path = manga_obj.download_chapter_into_pdf()
 
     # upload to gdrive
-    file_data = upload_file_to_drive(
-        drive_file_name=pdf_path.split("/")[-1],
-        file_path=pdf_path,
-        parents=[manga_download_data["g_drive_folder_id"]],
-    )
+    # file_data = upload_file_to_drive(
+    #     drive_file_name=pdf_path.split("/")[-1],
+    #     file_path=pdf_path,
+    #     parents=[manga_download_data["g_drive_folder_id"]],
+    # )
 
     # OUT OF FUNDS - Might just leave this out
     # send sms with gdrive links
